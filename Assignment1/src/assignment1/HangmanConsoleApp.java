@@ -8,7 +8,7 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class HangmanConsoleApp {
-	private String WORDS_FILE_PATH = "assets/hangman.txt";
+	private String WORDS_FILE_PATH = "assets/datasource/hangman.txt";
 	private ArrayList<String> allWords = new ArrayList<String>();
 	Scanner kbd = new Scanner(System.in);
 
