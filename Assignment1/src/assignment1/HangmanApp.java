@@ -8,12 +8,14 @@ import javax.swing.JPanel;
 
 public class HangmanApp extends JFrame implements AppScreenNavigator {
 	private JPanel contentPane;
+	private HangmanDataSource dataSource;
 
 	private HangmanApp() {
-		this.init();
+		this.dataSource = new HangmanDataSource();
+		this.initUI();
 	}
 
-	private void init() {
+	private void initUI() {
 		// create new jpanel and assign it to contentPane
 		this.contentPane = new JPanel();
 		// set the layout of contentPane to BorderLayout
@@ -52,12 +54,12 @@ public class HangmanApp extends JFrame implements AppScreenNavigator {
 
 	@Override
 	public void openAddNewWordScreen() {
-		changePanel(new AddNewWordScreen(this));
+		changePanel(new AddNewWordScreen(this, dataSource));
 	}
 
 	@Override
 	public void openGameScreen() {
-		changePanel(new GameScreen(this));
+		changePanel(new GameScreen(this, dataSource));
 	}
 
 	@Override

@@ -15,10 +15,10 @@ public class StartScreen extends JPanel {
 
 	StartScreen(AppScreenNavigator navigator) {
 		this.navigator = navigator;
-		this.init();
+		this.initUI();
 	}
 
-	private void init() {
+	private void initUI() {
 		this.setBackground(Color.WHITE);
 		this.setLayout(new BorderLayout(0, 0));
 		this.addAppLogo();

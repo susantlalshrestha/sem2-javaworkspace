@@ -6,13 +6,15 @@ import javax.swing.JPanel;
 
 public class AddNewWordScreen extends JPanel {
 	private AppScreenNavigator navigator;
+	private HangmanDataSource datasource;
 
-	public AddNewWordScreen(AppScreenNavigator navigator) {
+	public AddNewWordScreen(AppScreenNavigator navigator, HangmanDataSource datasource) {
 		this.navigator = navigator;
-		this.init();
+		this.datasource = datasource;
+		this.initUI();
 	}
 
-	private void init() {
+	private void initUI() {
 		this.setBackground(Color.red);
 	}
 }
