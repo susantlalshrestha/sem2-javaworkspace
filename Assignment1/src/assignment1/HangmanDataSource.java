@@ -57,4 +57,24 @@ public class HangmanDataSource {
 			return false;
 		}
 	}
+
+	public boolean removeWord(String word) {
+		if (word == null || word.trim().equals("") || !wordList.contains(word)) {
+			return false;
+		}
+		File file = new File(AppConstants.DATASOURCE_FILE_PATH);
+		try (PrintWriter writer = new PrintWriter(file);) {
+			wordList.remove(wordList.indexOf(word.trim().toUpperCase()));
+			for (String w : wordList) {
+				writer.println(w);
+			}
+			return true;
+		} catch (FileNotFoundException e) {
+			System.out.printf("Cannot find a file in the give path: %s.\n", AppConstants.DATASOURCE_FILE_PATH);
+			return false;
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			return false;
+		}
+	}
 }

@@ -7,4 +7,7 @@ public class AppConstants {
 	public static final int APP_FRAME_HEIGHT = 500;
 	public static final String DATASOURCE_FILE_PATH = "assets/datasource/hangman.txt";
 	public static final int TOTAL_LIVES = 5;
+	public static final String[] HANGMAN_PICS = { "assets/images/hangman_pic_1.png", "assets/images/hangman_pic_2.png",
+			"assets/images/hangman_pic_3.png", "assets/images/hangman_pic_4.png", "assets/images/hangman_pic_5.png",
+			"assets/images/hangman_pic_6.png", };
 }

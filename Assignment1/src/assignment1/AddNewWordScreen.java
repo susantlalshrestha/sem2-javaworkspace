@@ -15,6 +15,6 @@ public class AddNewWordScreen extends JPanel {
 	}
 
 	private void initUI() {
-		this.setBackground(Color.red);
+		this.setBackground(Color.WHITE);
 	}
 }

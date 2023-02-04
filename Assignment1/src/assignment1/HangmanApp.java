@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 public class HangmanApp extends JFrame implements AppScreenNavigator {
@@ -64,7 +65,11 @@ public class HangmanApp extends JFrame implements AppScreenNavigator {
 
 	@Override
 	public void exitGame() {
-		System.exit(0);
+		int choice = JOptionPane.showOptionDialog(null, "Are you sure you want to exit the game?", null,
+				JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE, null, null, 0);
+		if (choice == 0) {
+			System.exit(0);
+		}
 	}
 
 	public static void open() {
