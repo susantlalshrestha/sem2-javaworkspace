@@ -14,6 +14,10 @@ This is the repository to push all of the java assignment.
 
   ![image info](open_workspace.png)
 
+- Import the project to workspace
+
+  ![image info](import_project.png)
+
 - Go to the terminal run the following command one by one (make sure your present working directory is sem2-javaworkspace in the terminal)
 
 ```
