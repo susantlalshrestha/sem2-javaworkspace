@@ -63,3 +63,10 @@ This is the repository to push all of the java assignment.
 ```
     git push -u origin BRANCH_NAME
 ```
+
+
+- Pull the origin (remote)
+
+```
+    git pull
+```
