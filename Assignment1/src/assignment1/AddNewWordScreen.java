@@ -103,20 +103,12 @@ public class AddNewWordScreen extends JPanel {
 		addButton.addActionListener(new ActionListener() {
 			  public void actionPerformed(ActionEvent ae) {
 			    String word = wordField.getText().trim();
-			    if (!word.isEmpty()) {
-			      word = word.toUpperCase();
-			      listModel.addElement(word);
-			      try {
-			        FileWriter saveWord = new FileWriter(AppConstants.DATASOURCE_FILE_PATH, true);
-			        saveWord.write(word + System.lineSeparator());
-			        saveWord.close();
-			      } catch (IOException e) {
-			        JOptionPane.showMessageDialog(addWord, "Word not saved in the file", "Error", JOptionPane.ERROR_MESSAGE);
-			      }
-			      wordField.setText("");
-			    } else {
-			      JOptionPane.showMessageDialog(addWord, "Enter a word", "Error", JOptionPane.ERROR_MESSAGE);
-			    }
+			    try {
+			    	datasource.addNewWord(word);					
+			    	listModel.addElement(word.toUpperCase());
+				} catch (Exception e) {
+			        JOptionPane.showMessageDialog(addWord, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+				}
 			  }
 			});
 		

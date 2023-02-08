@@ -84,7 +84,7 @@ public class HangmanDataSource {
 			throw new Exception("Empty word cannot be added!!");
 		}
 		// If the newWord is null or is an empty string, throw an exception
-		if (wordList.contains(newWord)) {
+		if (wordList.contains(newWord.toUpperCase())) {
 			throw new Exception(newWord + " is already added!!");
 		}
 		// Create a File object for the data source file
