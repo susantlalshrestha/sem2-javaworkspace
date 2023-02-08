@@ -12,9 +12,11 @@ import java.util.Scanner;
  * hangman game. It fetches the words from hangman.txt file and stores it in an
  * ArrayList. The class provides methods to access the word list and add new
  * words to the list.
+ * 
+ * @author Susant Shrestha
  */
 public class HangmanDataSource {
-	// The ArrayList that stores the word list.
+	/** The ArrayList that stores the word list. */
 	private ArrayList<String> wordList;
 
 	public HangmanDataSource() {

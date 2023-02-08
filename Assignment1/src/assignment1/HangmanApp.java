@@ -14,9 +14,9 @@ import javax.swing.JPanel;
  * @author Susant Shrestha
  */
 public class HangmanApp extends JFrame implements AppScreenNavigator {
-	// instance variable to store the content pane of the frame
+	/** instance variable to store the content pane of the frame */
 	private JPanel contentPane;
-	// instance variable to store the data source for the game
+	/** instance variable to store the data source for the game */
 	private HangmanDataSource dataSource;
 
 	/**

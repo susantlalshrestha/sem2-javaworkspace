@@ -6,8 +6,16 @@ import java.awt.event.ActionListener;
 import java.io.*;
 import javax.swing.*;
 
+/**
+ * The AddNewWordScreen class extends JPanel and represents the screen to add new word in
+ * hangman game. It contains all the necessary UI components and functions to add new word.
+ * 
+ * @author 
+ */
 public class AddNewWordScreen extends JPanel {
+	/** The AppScreenNavigator instance that is used to navigate to different screens. */
 	private AppScreenNavigator navigator;
+	/** The HangmanDataSource instance that is used to add new word to the file. */
 	private HangmanDataSource datasource;
 	//create the panel to show the words
 	private JPanel viewWords;
