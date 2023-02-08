@@ -76,10 +76,14 @@ public class HangmanDataSource {
 	 * @param - newWord the new word to add.
 	 * @return true if the new word was added successfully, false otherwise.
 	 */
-	public boolean addNewWord(String newWord) {
-		// If the newWord is null or is an empty string, return false
-		if (newWord == null || newWord.trim().equals("")) {
-			return false;
+	public void addNewWord(String newWord) throws Exception {
+		// If the newWord is null or is an empty string, throw an exception
+		if (newWord == null || newWord.trim().isEmpty()) {
+			throw new Exception("Empty word cannot be added!!");
+		}
+		// If the newWord is null or is an empty string, throw an exception
+		if (wordList.contains(newWord)) {
+			throw new Exception(newWord + " is already added!!");
 		}
 		// Create a File object for the data source file
 		File file = new File(AppConstants.DATASOURCE_FILE_PATH);
@@ -90,15 +94,13 @@ public class HangmanDataSource {
 			for (String word : wordList) {
 				writer.println(word);
 			}
-			return true;
 		} catch (FileNotFoundException e) {
-			// Catch and print the exception if the file could not be found
-			System.out.printf("Cannot find a file in the give path: %s.\n", AppConstants.DATASOURCE_FILE_PATH);
-			return false;
+			// Catch and throw the exception if the file could not be found
+			throw new Exception("Cannot find a file in the give path: " + AppConstants.DATASOURCE_FILE_PATH);
 		} catch (Exception e) {
-			// Catch and print any other exception
+			// Catch and throw other exception
 			System.out.println(e.getMessage());
-			return false;
+			throw new Exception("Unexpected error occured while adding new word");
 		}
 	}
 }
