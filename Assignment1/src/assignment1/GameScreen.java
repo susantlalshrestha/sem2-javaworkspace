@@ -18,34 +18,34 @@ import javax.swing.JTextField;
  * The GameScreen class extends JPanel and represents the game screen of a
  * hangman game. It contains all the necessary UI components and functions to
  * play the game.
+ * 
+ * @author Susant Shrestha
  */
 public class GameScreen extends JPanel {
-	// The AppScreenNavigator instance that is used to navigate to different
-	// screens.
+	/** The AppScreenNavigator instance that is used to navigate to different screens. */
 	private AppScreenNavigator navigator;
-	// The HangmanDataSource instance that is used to get a random word
+	/** The HangmanDataSource instance that is used to get a random word */
 	private HangmanDataSource datasource;
-	// The word to be guessed in the current game.
+	/** The word to be guessed in the current game. */
 	private String randomWord;
-	// The word that is being guessed by the player, represented by asterisks and
-	// correctly guessed letters.
+	/** The word that is being guessed by the player, represented by asterisks and correctly guessed letters. */
 	private String resultWord;
-	// The letters that have already been guessed in the current game.
+	/** The letters that have already been guessed in the current game. */
 	private String guessedLetters;
-	// The number of lives remaining for the player in the current game.
+	/** The number of lives remaining for the player in the current game. */
 	private int livesLeft;
-	// A flag to keep track of whether the game is in progress or has been stopped.
+	/** A flag to keep track of whether the game is in progress or has been stopped. */
 	public boolean isGameStopped;
 
-	// A JLabel to display the hangman picture.
+	/** A JLabel to display the hangman picture. */
 	private JLabel hangmanPic;
-	// A JLabel to display the word being guessed by the player.
+	/** A JLabel to display the word being guessed by the player. */
 	private JLabel labelGuess;
-	// A JLabel to display error messages.
+	/** A JLabel to display error messages. */
 	private JLabel labelError;
-	// A JTextField to allow the player to enter their guess.
+	/** A JTextField to allow the player to enter their guess. */
 	private JTextField textFieldGuess;
-	// A JButton to submit the player's guess.
+	/** A JButton to submit the player's guess */
 	private JButton buttonGuess;
 
 	/**

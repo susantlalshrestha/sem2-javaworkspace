@@ -18,10 +18,7 @@ import javax.swing.JPanel;
  * @author Susant Shrestha
  */
 public class StartScreen extends JPanel {
-	/**
-	 * The AppScreenNavigator interface that is used to navigate to different
-	 * screens in the hangman game.
-	 */
+	/** The AppScreenNavigator instance that is used to navigate to different screens. */
 	private AppScreenNavigator navigator;
 
 	/**

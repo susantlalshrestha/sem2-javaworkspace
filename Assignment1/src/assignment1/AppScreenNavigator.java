@@ -3,6 +3,8 @@ package assignment1;
 /**
  * AppScreenNavigator interface defines the contract for navigating between
  * different screens in the game application.
+ * 
+ * @author Susant Shrestha
  */
 public interface AppScreenNavigator {
 	/**
