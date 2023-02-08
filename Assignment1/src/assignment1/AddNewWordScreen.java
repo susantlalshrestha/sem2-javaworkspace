@@ -4,6 +4,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
+import java.util.Scanner;
+
 import javax.swing.*;
 
 public class AddNewWordScreen extends JPanel {
@@ -63,18 +65,8 @@ public class AddNewWordScreen extends JPanel {
 		
 		//list model to read the words in the document
 	    listModel = new DefaultListModel<>();
-	    try {
-	    	// BufferedReader is to read the words in the document. The path is in the class AppConstants
-	      BufferedReader reader = new BufferedReader(new FileReader(AppConstants.DATASOURCE_FILE_PATH));
-	      String line; //variable to determine each line
-	      //while loop to read all lines in the document. While is not null, keeps reading
-	      while ((line = reader.readLine()) != null) {
-	        listModel.addElement(line);
-	      }
-	      reader.close();
-	      //catch a exception in case there is a problem reading the document. If there is, message will pop up in a JOptionPane
-	    } catch (IOException e) {
-	      JOptionPane.showMessageDialog(this, "Error reading file", "Error", JOptionPane.ERROR_MESSAGE);
+	    for(String word: datasource.getWordList()) {
+	    	listModel.addElement(word);
 	    }
 		
 	    //listofWords created to show the list
@@ -100,35 +92,25 @@ public class AddNewWordScreen extends JPanel {
 		//create a add buton
 		addButton = new JButton("Add word");
 		//create an anonymous class to determine the ActionListener
-		addButton.addActionListener(new ActionListener() 
-		{
-			public void actionPerformed(ActionEvent ae) 
-			{
-				String word = wordField.getText().trim();
-				//enter a if condition to throw an error in case the user does not enters a word
-				if(!word.isEmpty()) {
-					//transform all words to upper case.
-					word = word.toUpperCase();
-					//add element word
-					listModel.addElement(word);
-					try {
-						//create a buffered writer to include the word in the file
-						BufferedWriter saveWord = new BufferedWriter(new FileWriter(AppConstants.DATASOURCE_FILE_PATH, true));
-						saveWord.write(word + System.lineSeparator());
-						//close it so save it
-						saveWord.close();
-						//throws an error in case it doesn't save it
-					} catch(IOException e) {
-						JOptionPane.showMessageDialog(addWord, "Word not saved in the file", "Error",JOptionPane.ERROR_MESSAGE);
-					}
-					//clears the field after adding the word
-					wordField.setText("");
-					//else is to throw a message for the user to enter the word
-				} else {
-					JOptionPane.showMessageDialog(addWord,  "Enter a word", "Error", JOptionPane.ERROR_MESSAGE);
-				}
-			}
-		});
+		addButton.addActionListener(new ActionListener() {
+			  public void actionPerformed(ActionEvent ae) {
+			    String word = wordField.getText().trim();
+			    if (!word.isEmpty()) {
+			      word = word.toUpperCase();
+			      listModel.addElement(word);
+			      try {
+			        FileWriter saveWord = new FileWriter(AppConstants.DATASOURCE_FILE_PATH, true);
+			        saveWord.write(word + System.lineSeparator());
+			        saveWord.close();
+			      } catch (IOException e) {
+			        JOptionPane.showMessageDialog(addWord, "Word not saved in the file", "Error", JOptionPane.ERROR_MESSAGE);
+			      }
+			      wordField.setText("");
+			    } else {
+			      JOptionPane.showMessageDialog(addWord, "Enter a word", "Error", JOptionPane.ERROR_MESSAGE);
+			    }
+			  }
+			});
 		
 		//add Label, textfield and button inside the Panel
 		addWord.add(wordLabel);
