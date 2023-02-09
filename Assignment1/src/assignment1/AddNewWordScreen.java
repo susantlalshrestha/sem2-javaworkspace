@@ -95,9 +95,9 @@ public class AddNewWordScreen extends JPanel {
 		addWord = new JPanel();
 		//create a label
 		wordLabel = new JLabel("Type the word to add: ");
-		//create a text field lenght of 20
-		wordField = new JTextField(20);
-		//create a add buton
+		//create a text field length of 10
+		wordField = new JTextField(10);
+		//create a add button
 		addButton = new JButton("Add word");
 		//create an anonymous class to determine the ActionListener
 		addButton.addActionListener(new ActionListener() {
@@ -116,7 +116,6 @@ public class AddNewWordScreen extends JPanel {
 		addWord.add(wordLabel);
 		addWord.add(wordField);
 		addWord.add(addButton);
-		
 	}
 	
 	//method to create a back button	
