@@ -13,7 +13,7 @@ import java.util.Scanner;
  * ArrayList. The class provides methods to access the word list and add new
  * words to the list.
  * 
- * @author Susant Shrestha
+ * @author Oluwole Obisanya
  */
 public class HangmanDataSource {
 	/** The ArrayList that stores the word list. */
@@ -76,14 +76,13 @@ public class HangmanDataSource {
 	 * Adds a new word to the word list.
 	 * 
 	 * @param - newWord the new word to add.
-	 * @return true if the new word was added successfully, false otherwise.
 	 */
 	public void addNewWord(String newWord) throws Exception {
 		// If the newWord is null or is an empty string, throw an exception
 		if (newWord == null || newWord.trim().isEmpty()) {
 			throw new Exception("Empty word cannot be added!!");
 		}
-		// If the newWord is null or is an empty string, throw an exception
+		// If the newWord is already added, throw an exception
 		if (wordList.contains(newWord.toUpperCase())) {
 			throw new Exception(newWord + " is already added!!");
 		}
