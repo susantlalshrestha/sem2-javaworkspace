@@ -6,12 +6,6 @@ public class Product {
 
 	private String id;
 	private String name;
-	@Override
-	public String toString() {
-		return "Product [id=" + id + ", name=" + name + ", description=" + description + ", quantity=" + quantity
-				+ ", unitPrice=" + unitPrice + "]";
-	}
-
 	private String description;
 	private int quantity;
 	private double unitPrice;
