@@ -95,6 +95,8 @@ public class FindDisplayScreen extends JFrame {
 		contentPane.add(radioButtonPanel, BorderLayout.NORTH);
 		contentPane.add(searchPanel, BorderLayout.CENTER);
 		contentPane.add(displayPanel, BorderLayout.SOUTH);
+		
+		this.setVisible(true);
 	}
 
 	private void displayProducts(List<Product> products) {
