@@ -27,7 +27,7 @@ public class FindDisplayScreen extends JFrame {
 	private void initUI() {
 		this.setTitle("Find/Display Products");
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		this.setSize(AppConstants.APP_FRAME_WIDTH, AppConstants.APP_FRAME_HEIGHT);
+//		this.setSize(AppConstants.APP_FRAME_WIDTH, AppConstants.APP_FRAME_HEIGHT);
 		this.setSize(800, 500);
 		this.setResizable(false);
 		this.setLocation(200, 200);
@@ -97,7 +97,7 @@ public class FindDisplayScreen extends JFrame {
 		searchPanel.add(searchButton);
 
 		JPanel productPanel = new JPanel();
-		productTextArea = new JTextArea(10, 50);
+		productTextArea = new JTextArea(20, 40);
 		productTextArea.setEditable(false);
 		JScrollPane scrollPane = new JScrollPane(productTextArea);
 		productPanel.add(scrollPane);
@@ -128,6 +128,7 @@ public class FindDisplayScreen extends JFrame {
 //		gbc.gridx = 0;
 //		gbc.gridy = 2;
 //		panel.add(allRadioButton, gbc);
+//		gbc.gridwidth = 4;
 //		gbc.gridx = 0;
 //		gbc.gridy = 3;
 //		panel.add(productTextArea, gbc);
