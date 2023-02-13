@@ -4,10 +4,14 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -45,6 +49,8 @@ public class AddUpdateScreen extends JFrame {
 	private JButton previousBtn;
 	private JButton nextBtn;
 	private JButton lastBtn;
+	
+	private int position = 0;
 
 	public AddUpdateScreen(ProductDataSource dataSource) {
 		this.dataSource = dataSource;
@@ -162,7 +168,51 @@ public class AddUpdateScreen extends JFrame {
 		panelAddUpdate.setLayout(new FlowLayout());
 		
 		addBtn = new JButton ("Add");
+		addBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ae) {
+				String id = txtFieldProductID.getText().trim();
+				String name = txtFieldProductName.getText().trim();
+				String description = textAreaDesc.getText().trim();
+				int quantity = Integer.parseInt(txtFieldQtdy.getText().trim());
+				double price = Double.parseDouble(txtFieldPrice.getText().trim());
+				try {
+					Product newProduct = new Product(id, name, description, quantity, price);
+					dataSource.addProduct(newProduct);
+					JOptionPane.showMessageDialog(panelAddUpdate, "Product added with success", "Success", JOptionPane.INFORMATION_MESSAGE);
+				} catch (Exception e) {
+					JOptionPane.showMessageDialog(panelAddUpdate, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+				} 
+				txtFieldProductID.setText("");
+				txtFieldProductName.setText("");
+				textAreaDesc.setText("");
+				txtFieldQtdy.setText("");
+				txtFieldPrice.setText("");
+	
+			}
+		});
+		
 		updateBtn = new JButton ("Update");
+		updateBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ae) {
+				String id = txtFieldProductID.getText().trim();
+				String name = txtFieldProductName.getText().trim();
+				String description = textAreaDesc.getText().trim();
+				int quantity = Integer.parseInt(txtFieldQtdy.getText().trim());
+				double price = Double.parseDouble(txtFieldPrice.getText().trim());
+				try {
+					Product newProduct = new Product(id, name, description, quantity, price);
+					dataSource.updateProduct(newProduct);
+					JOptionPane.showMessageDialog(panelAddUpdate, "Product updated with success", "Success", JOptionPane.INFORMATION_MESSAGE);
+				} catch (Exception e) {
+					JOptionPane.showMessageDialog(panelAddUpdate, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+				} 
+				txtFieldProductID.setText("");
+				txtFieldProductName.setText("");
+				textAreaDesc.setText("");
+				txtFieldQtdy.setText("");
+				txtFieldPrice.setText("");
+			}
+		});
 		
 		panelAddUpdate.add(addBtn);
 		panelAddUpdate.add(updateBtn);
@@ -175,11 +225,87 @@ public class AddUpdateScreen extends JFrame {
 		panelFirstLast = new JPanel();
 		panelFirstLast.setLayout(new FlowLayout());
 
-		
 		firstBtn = new JButton("First");
+		firstBtn.addActionListener(new ActionListener() {
+			  public void actionPerformed(ActionEvent ae) {
+				try {
+					position = 0;
+					Product product = dataSource.getProduct(position, false);
+					if (product == null) {
+						JOptionPane.showMessageDialog(panelFirstLast, "No product found at position " + position, "Error", JOptionPane.ERROR_MESSAGE);
+					} else {
+					txtFieldProductID.setText(product.getId());
+					txtFieldProductName.setText(product.getName());
+					textAreaDesc.setText(product.getDescription());
+					txtFieldQtdy.setText(String.valueOf(product.getQuantity()));
+					txtFieldPrice.setText(String.valueOf(product.getUnitPrice()));
+					}
+				} catch (Exception e) {
+				      JOptionPane.showMessageDialog(panelFirstLast, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+			    }
+			}
+		});
+		
 		previousBtn = new JButton("Previous");
+		previousBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ae) {
+				try {
+					position--;
+					Product product = dataSource.getProduct(position, false);
+					if (product != null){
+						txtFieldProductID.setText(product.getId());
+						txtFieldProductName.setText(product.getName());
+						textAreaDesc.setText(product.getDescription());
+						txtFieldQtdy.setText(String.valueOf(product.getQuantity()));
+						txtFieldPrice.setText(String.valueOf(product.getUnitPrice()));
+					}else {
+						JOptionPane.showMessageDialog(panelFirstLast, "No more products to display.", "Error", JOptionPane.INFORMATION_MESSAGE);
+					}
+				} catch (Exception e) {
+				      JOptionPane.showMessageDialog(panelFirstLast, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+				}
+			}
+			});
+		
 		nextBtn = new JButton("Next");
+		nextBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ae) {
+				try {
+					position++;
+					Product product = dataSource.getProduct(position, false);
+					if (product != null) {
+						txtFieldProductID.setText(product.getId());
+						txtFieldProductName.setText(product.getName());
+						textAreaDesc.setText(product.getDescription());
+						txtFieldQtdy.setText(String.valueOf(product.getQuantity()));
+						txtFieldPrice.setText(String.valueOf(product.getUnitPrice()));
+					} else {
+						JOptionPane.showMessageDialog(panelFirstLast, "No more products to display.", "Error", JOptionPane.INFORMATION_MESSAGE);
+					}
+				} catch (Exception e) {
+				      JOptionPane.showMessageDialog(panelFirstLast, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+				}
+			}
+			});
+		
+		
 		lastBtn = new JButton("Last");
+		lastBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ae) {
+				try {
+					Product product = dataSource.getProduct(position, true);
+					if (product != null) {
+						txtFieldProductID.setText(product.getId());
+						txtFieldProductName.setText(product.getName());
+						textAreaDesc.setText(product.getDescription());
+						txtFieldQtdy.setText(String.valueOf(product.getQuantity()));
+						txtFieldPrice.setText(String.valueOf(product.getUnitPrice()));
+					}
+				} catch (Exception e) {
+					JOptionPane.showMessageDialog(panelFirstLast, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		});
 		
 		panelFirstLast.add(firstBtn);
 		panelFirstLast.add(previousBtn);
