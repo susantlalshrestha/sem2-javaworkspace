@@ -17,71 +17,72 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 /**
- * The AddUpdateScreen class is the frame where the user can add, update or view a product. 
- * The user can view the products using the First, Last, Previous and Next Buttons
- * The user can add using the add button and update using the update button
- * It extends JFrame.
+ * The AddUpdateScreen class is the frame where the user can add, update or view
+ * a product. The user can view the products using the First, Last, Previous and
+ * Next Buttons The user can add using the add button and update using the
+ * update button It extends JFrame.
  * 
  * @author Leon Czarlinski
  */
 
 public class AddUpdateScreen extends JFrame {
 	private ProductDataSource dataSource;
-	//Create a panel to have label and text field for product ID
+	// Create a panel to have label and text field for product ID
 	private JPanel panelAddProductID;
-	//Label for product ID
+	// Label for product ID
 	private JLabel labelProductID;
-	//Text field for product ID;
+	// Text field for product ID;
 	private JTextField txtFieldProductID;
-	
-	//Create panel to have label and text field for Product name
+
+	// Create panel to have label and text field for Product name
 	private JPanel panelAddProductName;
-	//Label for product name
+	// Label for product name
 	private JLabel labelProductName;
-	//text field for product name
+	// text field for product name
 	private JTextField txtFieldProductName;
-	
-	//Create a panel to display description, quantity and unit price
+
+	// Create a panel to display description, quantity and unit price
 	private JPanel panelCenter;
-	
-	//Create a panel for product description
+
+	// Create a panel for product description
 	private JPanel panelProductDesc;
-	//create a label for product description
+	// create a label for product description
 	private JLabel labelProductDesc;
-	//create a text area for the product description
+	// create a text area for the product description
 	private JTextArea textAreaDesc;
-	
-	//Create a panel for grid layout of quantity and unit price
+
+	// Create a panel for grid layout of quantity and unit price
 	private JPanel panelQtdyPrice;
-	//label for quantity
+	// label for quantity
 	private JLabel labelQtdy;
-	//text field for quantity
+	// text field for quantity
 	private JTextField txtFieldQtdy;
-	//label for unit price
+	// label for unit price
 	private JLabel labelPrice;
-	//text field for unit price
+	// text field for unit price
 	private JTextField txtFieldPrice;
-	
-	//Create a panel for the add and update buttons
+
+	// Create a panel for the add and update buttons
 	private JPanel panelAddUpdate;
-	//Button add
+	// Button add
 	private JButton addBtn;
-	//Button update
+	// Button update
 	private JButton updateBtn;
-	
-	//Create a panel for the first, previous, next and last navigation
+
+	// Create a panel for the first, previous, next and last navigation
 	private JPanel panelFirstLast;
-	//button for first position
+	// button for first position
 	private JButton firstBtn;
-	//button for previous
+	// button for previous
 	private JButton previousBtn;
-	//button for next
+	// button for next
 	private JButton nextBtn;
-	//button for last position
+	// button for last position
 	private JButton lastBtn;
-	
-	//variable to determine the current position to navigate
+
+	// variable to determine the current position to navigate
 	private int currentPosition = 0;
+	private boolean reversed = false;
 	private int numProducts = 0;
 
 	public AddUpdateScreen(ProductDataSource dataSource) {
@@ -102,196 +103,199 @@ public class AddUpdateScreen extends JFrame {
 		this.setLocation(150, 150);
 		// make frame visible
 		this.setVisible(true);
-		//method to layout of product ID
+		// method to layout of product ID
 		CreateProductID();
-		//method to layout of product name
+		// method to layout of product name
 		CreateProductName();
-		//method to layout of product description
+		// method to layout of product description
 		CreateDescription();
-		//method to layout of product price and quantity
+		// method to layout of product price and quantity
 		CreatePriceQtdy();
-		//method to layout of product description with price and quantity
+		// method to layout of product description with price and quantity
 		CreatePanelCenter();
-		//method to layout the buttons to add and update
+		// method to layout the buttons to add and update
 		CreateAddUpdate();
-		//method to layout the buttons to first, last, next and previous
+		// method to layout the buttons to first, last, next and previous
 		CreateFirstLast();
-		//method to layout all elements together
+		// method to layout all elements together
 		CreateLayout();
 	}
-	
-	//method to layout of product ID 
+
+	// method to layout of product ID
 	public void CreateProductID() {
 		panelAddProductID = new JPanel();
-		//setting the layout to FlowLayoyt
-		panelAddProductID.setLayout(new FlowLayout()); 
-		
-		//adding the writing for the label
+		// setting the layout to FlowLayoyt
+		panelAddProductID.setLayout(new FlowLayout());
+
+		// adding the writing for the label
 		labelProductID = new JLabel("ProductID");
-		//setting the size for the dimension
+		// setting the size for the dimension
 		labelProductID.setPreferredSize(new Dimension(100, 20));
-		//setting the size for the text field
+		// setting the size for the text field
 		txtFieldProductID = new JTextField(20);
-		
-		//adding the label and text field to the panel
+
+		// adding the label and text field to the panel
 		panelAddProductID.add(labelProductID);
 		panelAddProductID.add(txtFieldProductID);
 	}
-	
-	//method to layout of product name
+
+	// method to layout of product name
 	public void CreateProductName() {
 		panelAddProductName = new JPanel();
-		//setting the layout to FlowLayoyt
+		// setting the layout to FlowLayoyt
 		panelAddProductName.setLayout(new FlowLayout());
-		
-		//adding the writing for the label
+
+		// adding the writing for the label
 		labelProductName = new JLabel("Name");
-		//setting the size for the dimension
+		// setting the size for the dimension
 		labelProductName.setPreferredSize(new Dimension(100, 20));
-		//setting the size for the text field
+		// setting the size for the text field
 		txtFieldProductName = new JTextField(20);
-		
-		//adding the label and text field to the panel
+
+		// adding the label and text field to the panel
 		panelAddProductName.add(labelProductName);
 		panelAddProductName.add(txtFieldProductName);
 	}
-	
-	//method to layout of product description
+
+	// method to layout of product description
 	public void CreateDescription() {
 		panelProductDesc = new JPanel();
-		//setting the layout to BorderLayout
+		// setting the layout to BorderLayout
 		panelProductDesc.setLayout(new BorderLayout());
 
-		//adding the writing for the label
+		// adding the writing for the label
 		labelProductDesc = new JLabel("Description");
-		//setting the size for the dimension
+		// setting the size for the dimension
 		labelProductDesc.setPreferredSize(new Dimension(100, 20));
-		//setting the position for the label to stay in the top of the panel
+		// setting the position for the label to stay in the top of the panel
 		labelProductDesc.setVerticalAlignment(JLabel.TOP);
-		//setting the size for the text area
-		textAreaDesc = new JTextArea(5,10);
-		
-		//adding the label and text area to the panel
+		// setting the size for the text area
+		textAreaDesc = new JTextArea(5, 10);
+
+		// adding the label and text area to the panel
 		panelProductDesc.add(labelProductDesc, BorderLayout.WEST);
 		panelProductDesc.add(textAreaDesc, BorderLayout.CENTER);
 	}
-	
-	//method to layout of product price and quantity
+
+	// method to layout of product price and quantity
 	public void CreatePriceQtdy() {
 		panelQtdyPrice = new JPanel();
-		//setting the layout to grid layout. 2 rows and 2 columns with a 40 px space between them
-		panelQtdyPrice.setLayout(new GridLayout(2,2,0,40));
-		//creating a border  to have some space between elements
-		panelQtdyPrice.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
+		// setting the layout to grid layout. 2 rows and 2 columns with a 40 px space
+		// between them
+		panelQtdyPrice.setLayout(new GridLayout(2, 2, 0, 40));
+		// creating a border to have some space between elements
+		panelQtdyPrice.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 
-		//adding the writing for the label
-		labelQtdy = new JLabel ("Quantity in hand");
-		//setting the size for the dimension
+		// adding the writing for the label
+		labelQtdy = new JLabel("Quantity in hand");
+		// setting the size for the dimension
 		labelQtdy.setPreferredSize(new Dimension(25, 20));
-		//setting the size for the text field
-		txtFieldQtdy = new JTextField (10);
-				
-		//adding the writing for the label
-		labelPrice = new JLabel ("Unit Price");	
-		//setting the size for the dimension
+		// setting the size for the text field
+		txtFieldQtdy = new JTextField(10);
+
+		// adding the writing for the label
+		labelPrice = new JLabel("Unit Price");
+		// setting the size for the dimension
 		labelPrice.setPreferredSize(new Dimension(25, 20));
-		//setting the size for the text field
-		txtFieldPrice = new JTextField (10);
-		
-		//adding the elements to the layout
+		// setting the size for the text field
+		txtFieldPrice = new JTextField(10);
+
+		// adding the elements to the layout
 		panelQtdyPrice.add(labelQtdy);
 		panelQtdyPrice.add(txtFieldQtdy);
 		panelQtdyPrice.add(labelPrice);
 		panelQtdyPrice.add(txtFieldPrice);
-		
+
 	}
-	
-	//method to layout of product description with price and quantity
+
+	// method to layout of product description with price and quantity
 	public void CreatePanelCenter() {
 		panelCenter = new JPanel();
-		//setting to a flowLayout
+		// setting to a flowLayout
 		panelCenter.setLayout(new FlowLayout());
-		//adding the elements to the panel
+		// adding the elements to the panel
 		panelCenter.add(panelProductDesc);
 		panelCenter.add(panelQtdyPrice);
-		
+
 	}
-	
-	//method to determine the size of the buttons. 
-	//since they have the same size, it would make it easier
+
+	// method to determine the size of the buttons.
+	// since they have the same size, it would make it easier
 	public void setButtonSize(JButton button) {
-	    Dimension size = button.getPreferredSize();
-	    size.width = 100; //determine the width
-	    size.height = 30; //determine the height
-	    button.setPreferredSize(size);
+		Dimension size = button.getPreferredSize();
+		size.width = 100; // determine the width
+		size.height = 30; // determine the height
+		button.setPreferredSize(size);
 	}
-	
-	//method to layout the buttons to add and update
+
+	// method to layout the buttons to add and update
 	public void CreateAddUpdate() {
 		panelAddUpdate = new JPanel();
-		//setting the layout to flow layout
+		// setting the layout to flow layout
 		panelAddUpdate.setLayout(new FlowLayout());
-		
-		//adding the button Add
-		addBtn = new JButton ("Add");
-		//adding the ActionListener as a anonymous class
+
+		// adding the button Add
+		addBtn = new JButton("Add");
+		// adding the ActionListener as a anonymous class
 		addBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ae) {
-				//create local variables to get the text from text field
-				String id = txtFieldProductID.getText().trim(); //product ID
-				String name = txtFieldProductName.getText().trim(); //product name
-				String description = textAreaDesc.getText().trim(); //product description
-				int quantity = Integer.parseInt(txtFieldQtdy.getText().trim()); //quantity
-				double price = Double.parseDouble(txtFieldPrice.getText().trim()); //unit price
-				//start try and catch to display correct messages to user 
+				// create local variables to get the text from text field
+				String id = txtFieldProductID.getText().trim(); // product ID
+				String name = txtFieldProductName.getText().trim(); // product name
+				String description = textAreaDesc.getText().trim(); // product description
+				int quantity = Integer.parseInt(txtFieldQtdy.getText().trim()); // quantity
+				double price = Double.parseDouble(txtFieldPrice.getText().trim()); // unit price
+				// start try and catch to display correct messages to user
 				try {
-					//create a object of the class
+					// create a object of the class
 					Product newProduct = new Product(id, name, description, quantity, price);
-					//call the method to validate 
+					// call the method to validate
 					dataSource.validateProduct(newProduct);
-					//call the method to add new product
+					// call the method to add new product
 					dataSource.addProduct(newProduct);
-					//display a message of success
-					JOptionPane.showMessageDialog(panelAddUpdate, "Product added with success", "Success", JOptionPane.INFORMATION_MESSAGE);
-				//throw an error message in case something goes wrong.
+					// display a message of success
+					JOptionPane.showMessageDialog(panelAddUpdate, "Product added with success", "Success",
+							JOptionPane.INFORMATION_MESSAGE);
+					// throw an error message in case something goes wrong.
 				} catch (Exception e) {
 					JOptionPane.showMessageDialog(panelAddUpdate, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-				} 
-				//clear the text field to blank
+				}
+				// clear the text field to blank
 				txtFieldProductID.setText("");
 				txtFieldProductName.setText("");
 				textAreaDesc.setText("");
 				txtFieldQtdy.setText("");
 				txtFieldPrice.setText("");
-	
+
 			}
 		});
-		
-		//adding the button Update
-		updateBtn = new JButton ("Update");
-		//adding the ActionListener as a anonymous class
+
+		// adding the button Update
+		updateBtn = new JButton("Update");
+		// adding the ActionListener as a anonymous class
 		updateBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ae) {
-				//create local variables to get the text from text field
-				String id = txtFieldProductID.getText().trim(); //product ID
-				String name = txtFieldProductName.getText().trim(); //product name
-				String description = textAreaDesc.getText().trim(); //product description
-				int quantity = Integer.parseInt(txtFieldQtdy.getText().trim()); //quantity
-				double price = Double.parseDouble(txtFieldPrice.getText().trim()); //unit price
-				//start try and catch to display correct messages to user 
+				// create local variables to get the text from text field
+				String id = txtFieldProductID.getText().trim(); // product ID
+				String name = txtFieldProductName.getText().trim(); // product name
+				String description = textAreaDesc.getText().trim(); // product description
+				int quantity = Integer.parseInt(txtFieldQtdy.getText().trim()); // quantity
+				double price = Double.parseDouble(txtFieldPrice.getText().trim()); // unit price
+				// start try and catch to display correct messages to user
 				try {
-					//create a object of the class
+					// create a object of the class
 					Product newProduct = new Product(id, name, description, quantity, price);
-					//call the method to validate 
+					// call the method to validate
 					dataSource.updateProduct(newProduct);
-					//display a message of success
-					JOptionPane.showMessageDialog(panelAddUpdate, "Product updated with success", "Success", JOptionPane.INFORMATION_MESSAGE);
-					//throw an error message in case something goes wrong.
+					// display a message of success
+					JOptionPane.showMessageDialog(panelAddUpdate, "Product updated with success", "Success",
+							JOptionPane.INFORMATION_MESSAGE);
+					// throw an error message in case something goes wrong.
 				} catch (Exception e) {
 					JOptionPane.showMessageDialog(panelAddUpdate, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-					
+
 				}
-				//clear the text field to blank
+				// clear the text field to blank
 				txtFieldProductID.setText("");
 				txtFieldProductName.setText("");
 				textAreaDesc.setText("");
@@ -299,159 +303,179 @@ public class AddUpdateScreen extends JFrame {
 				txtFieldPrice.setText("");
 			}
 		});
-		
-		//add the two buttons to the panel
+
+		// add the two buttons to the panel
 		panelAddUpdate.add(addBtn);
 		panelAddUpdate.add(updateBtn);
-		
-		//set the size for the buttons
-	    setButtonSize(addBtn);
-	    setButtonSize(updateBtn);
+
+		// set the size for the buttons
+		setButtonSize(addBtn);
+		setButtonSize(updateBtn);
 	}
-	
-	//method to layout the buttons to first, last, next and previous
+
+	// method to layout the buttons to first, last, next and previous
 	public void CreateFirstLast() {
 		panelFirstLast = new JPanel();
-		//setting the layout to flow layout
+		// setting the layout to flow layout
 		panelFirstLast.setLayout(new FlowLayout());
 
-		//create the First button of the navigation
+		// create the First button of the navigation
 		firstBtn = new JButton("First");
-		//add the actionListener as a anonymous class
+		// add the actionListener as a anonymous class
 		firstBtn.addActionListener(new ActionListener() {
-			  public void actionPerformed(ActionEvent ae) {
+			public void actionPerformed(ActionEvent ae) {
 				try {
-					//determine the current position
-					currentPosition = 0;
-					Product product = dataSource.getProduct(currentPosition, false);
-					//if product is not null, it will show the product info
+					Product product = dataSource.getProduct(0, false);
+					// if product is not null, it will show the product info
 					if (product != null) {
-						//set the text in the text field
+						// set the text in the text field
 						txtFieldProductID.setText(product.getId());
 						txtFieldProductName.setText(product.getName());
 						textAreaDesc.setText(product.getDescription());
 						txtFieldQtdy.setText(String.valueOf(product.getQuantity()));
 						txtFieldPrice.setText(String.valueOf(product.getUnitPrice()));
+						// set the reversed to false
+						reversed = false;
+						// determine the current position
+						currentPosition = 0;
 					} else {
-						//display error message
-						JOptionPane.showMessageDialog(panelFirstLast, "No product found at position " + currentPosition, "Error", JOptionPane.ERROR_MESSAGE);
+						// display error message
+						JOptionPane.showMessageDialog(panelFirstLast, "No product found at position " + currentPosition,
+								"Error", JOptionPane.ERROR_MESSAGE);
 					}
 				} catch (Exception e) {
-					//display error message from method
-				      JOptionPane.showMessageDialog(panelFirstLast, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-			    }
+					// display error message from method
+					JOptionPane.showMessageDialog(panelFirstLast, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+				}
 			}
 		});
-		
-		//create the Previous button
+
+		// create the Previous button
 		previousBtn = new JButton("Previous");
-		//add the Action Listener as a anonymous class
+		// add the Action Listener as a anonymous class
 		previousBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ae) {
 				try {
-					//determine the current position
-					currentPosition = currentPosition - 1;
-					Product product = dataSource.getProduct(currentPosition, false);
-					//if product is not null, it will show the product info
-					if(product != null) {
-						//set the text in the text field
-						txtFieldProductID.setText(product.getId());
-						txtFieldProductName.setText(product.getName());
-						textAreaDesc.setText(product.getDescription());
-						txtFieldQtdy.setText(String.valueOf(product.getQuantity()));
-						txtFieldPrice.setText(String.valueOf(product.getUnitPrice()));
-					}else {
-						//display error message
-						JOptionPane.showMessageDialog(panelFirstLast, "No more products to display.", "Error", JOptionPane.INFORMATION_MESSAGE);
-						//adjust current position
-						currentPosition = currentPosition + 1;
-					}
-					//display error message
-				} catch (Exception e) {
-				      JOptionPane.showMessageDialog(panelFirstLast, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-				}
-			}
-			});
-		
-		//create the Next button
-		nextBtn = new JButton("Next");
-		//add the Action Listener as a anonymous class
-		nextBtn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent ae) {
-				try {
-					//determine the current position
-					currentPosition = currentPosition + 1;
-					Product product = dataSource.getProduct(currentPosition, false);
-					//if product is not null, it will show the product info
-					if (product != null) {
-						txtFieldProductID.setText(product.getId());
-						txtFieldProductName.setText(product.getName());
-						textAreaDesc.setText(product.getDescription());
-						txtFieldQtdy.setText(String.valueOf(product.getQuantity()));
-						txtFieldPrice.setText(String.valueOf(product.getUnitPrice()));
+					Product product = null;
+					if (!reversed) {
+						product = dataSource.getProduct(currentPosition - 1, reversed);
 					} else {
-						//display error message
-						JOptionPane.showMessageDialog(panelFirstLast, "No more products to display.", "Error", JOptionPane.INFORMATION_MESSAGE);
-						//adjust current position
-						currentPosition = currentPosition - 1;
+						product = dataSource.getProduct(currentPosition + 1, reversed);
 					}
-					//display error message
-				} catch (Exception e) {
-				      JOptionPane.showMessageDialog(panelFirstLast, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-				}
-			}
-			});
-		
-		//create the Last button
-		lastBtn = new JButton("Last");
-		//add the Action Listener as a anonymous class
-		lastBtn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent ae) {
-				try {
-					//determine the last position by calling the method from dataSource
-					int numProducts = dataSource.getNumProducts();
-					//adjust the position
-					currentPosition = numProducts - 1;
-					Product product = dataSource.getProduct(currentPosition, false);
+					// if product is not null, it will show the product info
 					if (product != null) {
-						//if product is not null, it will show the product info
+						// set the text in the text field
 						txtFieldProductID.setText(product.getId());
 						txtFieldProductName.setText(product.getName());
 						textAreaDesc.setText(product.getDescription());
 						txtFieldQtdy.setText(String.valueOf(product.getQuantity()));
 						txtFieldPrice.setText(String.valueOf(product.getUnitPrice()));
-					}else {
-						//display error message
-						JOptionPane.showMessageDialog(panelFirstLast, "No more products available.", "Error", JOptionPane.ERROR_MESSAGE);
-						//adjust current position
-						currentPosition = 0;
+						// adjust the current position
+						if (!reversed) {
+							currentPosition = currentPosition - 1;
+						} else {
+							currentPosition = currentPosition + 1;
+						}
+					} else {
+						// display error message
+						JOptionPane.showMessageDialog(panelFirstLast, "No more products to display.", "Error",
+								JOptionPane.INFORMATION_MESSAGE);
 					}
-					//display error message
+					// display error message
 				} catch (Exception e) {
 					JOptionPane.showMessageDialog(panelFirstLast, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});
-		
-		//add buttons to the panel
+
+		// create the Next button
+		nextBtn = new JButton("Next");
+		// add the Action Listener as a anonymous class
+		nextBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ae) {
+				try {
+					Product product;
+					if (!reversed) {
+						product = dataSource.getProduct(currentPosition + 1, reversed);
+					} else {
+						product = dataSource.getProduct(currentPosition - 1, reversed);
+					}
+					// if product is not null, it will show the product info
+					if (product != null) {
+						txtFieldProductID.setText(product.getId());
+						txtFieldProductName.setText(product.getName());
+						textAreaDesc.setText(product.getDescription());
+						txtFieldQtdy.setText(String.valueOf(product.getQuantity()));
+						txtFieldPrice.setText(String.valueOf(product.getUnitPrice()));
+						// adjust the current position
+						if (!reversed) {
+							currentPosition = currentPosition + 1;
+						} else {
+							currentPosition = currentPosition - 1;
+						}
+					} else {
+						// display error message
+						JOptionPane.showMessageDialog(panelFirstLast, "No more products to display.", "Error",
+								JOptionPane.INFORMATION_MESSAGE);
+					}
+					// display error message
+				} catch (Exception e) {
+					JOptionPane.showMessageDialog(panelFirstLast, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		});
+
+		// create the Last button
+		lastBtn = new JButton("Last");
+		// add the Action Listener as a anonymous class
+		lastBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ae) {
+				try {
+					// determine the last position by calling the method from dataSource
+//					int numProducts = dataSource.getNumProducts();
+					Product product = dataSource.getProduct(0, true);
+					if (product != null) {
+						// if product is not null, it will show the product info
+						txtFieldProductID.setText(product.getId());
+						txtFieldProductName.setText(product.getName());
+						textAreaDesc.setText(product.getDescription());
+						txtFieldQtdy.setText(String.valueOf(product.getQuantity()));
+						txtFieldPrice.setText(String.valueOf(product.getUnitPrice()));
+						// set the reversed to true
+						reversed = true;
+						// adjust the position
+						currentPosition = 0;
+					} else {
+						// display error message
+						JOptionPane.showMessageDialog(panelFirstLast, "No more products available.", "Error",
+								JOptionPane.ERROR_MESSAGE);
+					}
+					// display error message
+				} catch (Exception e) {
+					JOptionPane.showMessageDialog(panelFirstLast, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		});
+
+		// add buttons to the panel
 		panelFirstLast.add(firstBtn);
 		panelFirstLast.add(previousBtn);
 		panelFirstLast.add(nextBtn);
 		panelFirstLast.add(lastBtn);
-		
-		//set the size of the buttons calling the methods
-	    setButtonSize(firstBtn);
-	    setButtonSize(previousBtn);
-	    setButtonSize(nextBtn);
-	    setButtonSize(lastBtn);
-		
+
+		// set the size of the buttons calling the methods
+		setButtonSize(firstBtn);
+		setButtonSize(previousBtn);
+		setButtonSize(nextBtn);
+		setButtonSize(lastBtn);
+
 	}
 
-	//method to create the layout
+	// method to create the layout
 	public void CreateLayout() {
-		//set to be aligned to the left
+		// set to be aligned to the left
 		setLayout(new FlowLayout(FlowLayout.LEFT));
-		//add elements
+		// add elements
 		add(panelAddProductID);
 		add(panelAddProductName);
 		add(panelCenter);
@@ -459,4 +483,3 @@ public class AddUpdateScreen extends JFrame {
 		add(panelFirstLast);
 	}
 }
-
