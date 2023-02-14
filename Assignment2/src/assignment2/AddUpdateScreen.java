@@ -83,7 +83,6 @@ public class AddUpdateScreen extends JFrame {
 	// variable to determine the current position to navigate
 	private int currentPosition = 0;
 	private boolean reversed = false;
-	private int numProducts = 0;
 
 	public AddUpdateScreen(ProductDataSource dataSource) {
 		this.dataSource = dataSource;
@@ -249,24 +248,31 @@ public class AddUpdateScreen extends JFrame {
 				try {
 					// create a object of the class
 					Product newProduct = new Product(id, name, description, quantity, price);
-					// call the method to validate
-					dataSource.validateProduct(newProduct);
 					// call the method to add new product
-					dataSource.addProduct(newProduct);
+					int addedPosition = dataSource.addProduct(newProduct);
 					// display a message of success
-					JOptionPane.showMessageDialog(panelAddUpdate, "Product added with success", "Success",
-							JOptionPane.INFORMATION_MESSAGE);
-					// throw an error message in case something goes wrong.
+					int choice = JOptionPane.showOptionDialog(null,
+							"Product added with success!! Do you add more products?", "Success",
+							JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE, null, null, 0);
+					if (choice == 0) {
+						// clear the text field to blank
+						txtFieldProductID.setText("");
+						txtFieldProductName.setText("");
+						textAreaDesc.setText("");
+						txtFieldQtdy.setText("");
+						txtFieldPrice.setText("");
+						// request focus for the txtFieldProductID
+						txtFieldProductID.requestFocus();
+					} else {
+						// update the current position
+						currentPosition = addedPosition;
+						// set the reversed to false
+						reversed = false;
+					}
 				} catch (Exception e) {
+					// throw an error message in case something goes wrong.
 					JOptionPane.showMessageDialog(panelAddUpdate, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 				}
-				// clear the text field to blank
-				txtFieldProductID.setText("");
-				txtFieldProductName.setText("");
-				textAreaDesc.setText("");
-				txtFieldQtdy.setText("");
-				txtFieldPrice.setText("");
-
 			}
 		});
 
@@ -286,21 +292,18 @@ public class AddUpdateScreen extends JFrame {
 					// create a object of the class
 					Product newProduct = new Product(id, name, description, quantity, price);
 					// call the method to validate
-					dataSource.updateProduct(newProduct);
+					int updatedPosition = dataSource.updateProduct(newProduct);
 					// display a message of success
 					JOptionPane.showMessageDialog(panelAddUpdate, "Product updated with success", "Success",
 							JOptionPane.INFORMATION_MESSAGE);
-					// throw an error message in case something goes wrong.
+					// update the current position
+					currentPosition = updatedPosition;
+					// set the reversed to false
+					reversed = false;
 				} catch (Exception e) {
+					// throw an error message in case something goes wrong.
 					JOptionPane.showMessageDialog(panelAddUpdate, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-
 				}
-				// clear the text field to blank
-				txtFieldProductID.setText("");
-				txtFieldProductName.setText("");
-				textAreaDesc.setText("");
-				txtFieldQtdy.setText("");
-				txtFieldPrice.setText("");
 			}
 		});
 
@@ -334,10 +337,10 @@ public class AddUpdateScreen extends JFrame {
 						textAreaDesc.setText(product.getDescription());
 						txtFieldQtdy.setText(String.valueOf(product.getQuantity()));
 						txtFieldPrice.setText(String.valueOf(product.getUnitPrice()));
-						// set the reversed to false
-						reversed = false;
 						// determine the current position
 						currentPosition = 0;
+						// set the reversed to false
+						reversed = false;
 					} else {
 						// display error message
 						JOptionPane.showMessageDialog(panelFirstLast, "No product found at position " + currentPosition,
@@ -441,10 +444,10 @@ public class AddUpdateScreen extends JFrame {
 						textAreaDesc.setText(product.getDescription());
 						txtFieldQtdy.setText(String.valueOf(product.getQuantity()));
 						txtFieldPrice.setText(String.valueOf(product.getUnitPrice()));
-						// set the reversed to true
-						reversed = true;
 						// adjust the position
 						currentPosition = 0;
+						// set the reversed to true
+						reversed = true;
 					} else {
 						// display error message
 						JOptionPane.showMessageDialog(panelFirstLast, "No more products available.", "Error",

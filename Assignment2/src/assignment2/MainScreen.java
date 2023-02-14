@@ -99,7 +99,6 @@ public class MainScreen extends JFrame implements AppScreenNavigator {
 		if (choice == 0) {
 			System.exit(0);
 		}
-
 	}
 
 	public static void open(ProductDataSource dataSource) {

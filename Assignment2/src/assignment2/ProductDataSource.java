@@ -70,7 +70,7 @@ public class ProductDataSource {
 		}
 	}
 
-	public void addProduct(Product newProduct) throws Exception {
+	public int addProduct(Product newProduct) throws Exception {
 		this.validateProduct(newProduct);
 		File file = new File(AppConstants.DATASOURCE_PATH);
 		ArrayList<Product> products = getAllProducts(file);
@@ -90,6 +90,7 @@ public class ProductDataSource {
 			out.write(stringToBytes(newProduct.getDescription(), AppConstants.PRODUCT_DESC_MAX_LENGTH));
 			out.writeInt(newProduct.getQuantity());
 			out.writeDouble(newProduct.getUnitPrice());
+			return products.size();
 		} catch (FileNotFoundException e) {
 			throw new FileNotFoundException("File not found in the path: " + AppConstants.DATASOURCE_PATH);
 		} catch (IOException e) {
@@ -100,21 +101,24 @@ public class ProductDataSource {
 		}
 	}
 
-	public void updateProduct(Product newProduct) throws Exception {
+	public int updateProduct(Product newProduct) throws Exception {
 		this.validateProduct(newProduct);
 		File file = new File(AppConstants.DATASOURCE_PATH);
 		ArrayList<Product> products = getAllProducts(file);
+		int updatedPosition = -1;
 		if (!products.contains(newProduct)) {
 			throw new Exception("Product with id " + newProduct.getId() + " is doesn't exist.");
 		}
 		try (DataOutputStream out = new DataOutputStream(new FileOutputStream(file));) {
-			for (Product product : products) {
+			for (int i = 0; i < products.size(); i++) {
+				Product product = products.get(i);
 				if (product.equals(newProduct)) {
 					out.write(stringToBytes(newProduct.getId(), AppConstants.PRODUCT_ID_LENGTH));
 					out.write(stringToBytes(newProduct.getName(), AppConstants.PRODUCT_NAME_MAX_LENGTH));
 					out.write(stringToBytes(newProduct.getDescription(), AppConstants.PRODUCT_DESC_MAX_LENGTH));
 					out.writeInt(newProduct.getQuantity());
 					out.writeDouble(newProduct.getUnitPrice());
+					updatedPosition = i;
 					continue;
 				}
 				out.write(stringToBytes(product.getId(), AppConstants.PRODUCT_ID_LENGTH));
@@ -123,12 +127,12 @@ public class ProductDataSource {
 				out.writeInt(product.getQuantity());
 				out.writeDouble(product.getUnitPrice());
 			}
+			return updatedPosition;
 		} catch (FileNotFoundException e) {
 			throw new FileNotFoundException("File not found in the path: " + AppConstants.DATASOURCE_PATH);
 		} catch (IOException e) {
 			throw new IOException("Couldn't write the product to the file. Make sure the input is correct!!", e);
 		} catch (Exception e) {
-			e.printStackTrace();
 			throw new Exception("Some unexpected error occured while adding the product!!", e);
 		}
 	}
