@@ -1,6 +1,8 @@
 package assignment2;
 
 import javax.swing.JFrame;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -17,7 +19,6 @@ public class FindDisplayScreen extends JFrame {
 	private JTextField toPriceTextField;
 	private JButton searchButton;
 	private JTable productTable;
-	private JTextArea productTextArea;
 
 	public FindDisplayScreen(ProductDataSource dataSource) {
 		this.dataSource = dataSource;
@@ -25,14 +26,15 @@ public class FindDisplayScreen extends JFrame {
 	}
 
 	private void initUI() {
-		this.setTitle("Find / Display Product");
+		this.setTitle("Find/Display Products");
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		this.setSize(AppConstants.APP_FRAME_WIDTH, AppConstants.APP_FRAME_HEIGHT);
+		this.setSize(800, 500);
 		this.setResizable(false);
 		this.setLocation(200, 200);
 
 		JPanel radioButtonPanel = new JPanel();
-		radioButtonPanel.setLayout(new BoxLayout(radioButtonPanel, BoxLayout.X_AXIS));
+		radioButtonPanel.setLayout(new BoxLayout(radioButtonPanel, BoxLayout.Y_AXIS));
 
 		allRadioButton = new JRadioButton("All");
 		keywordRadioButton = new JRadioButton("Keyword");
@@ -48,12 +50,18 @@ public class FindDisplayScreen extends JFrame {
 		radioButtonPanel.add(priceRangeRadioButton);
 
 		JPanel searchPanel = new JPanel();
-		searchPanel.setLayout(new BoxLayout(searchPanel, BoxLayout.X_AXIS));
+		searchPanel.setLayout(new GridLayout(1, 4, 10, 0));
 
-		keywordTextField = new JTextField();
-		fromPriceTextField = new JTextField();
-		toPriceTextField = new JTextField();
-		searchButton = new JButton("Search");
+		toPriceTextField = new JTextField(3);
+		toPriceTextField.setText("to");
+		toPriceTextField.setFont(toPriceTextField.getFont().deriveFont(10f));
+		fromPriceTextField = new JTextField(3);
+		fromPriceTextField.setText("from");
+		fromPriceTextField.setFont(fromPriceTextField.getFont().deriveFont(10f));
+		keywordTextField = new JTextField(3);
+		keywordTextField.setText("keyword");
+		keywordTextField.setFont(keywordTextField.getFont().deriveFont(10f));
+		searchButton = new JButton("Find/Display");
 
 		searchButton.addActionListener(new ActionListener() {
 			@Override
@@ -69,38 +77,39 @@ public class FindDisplayScreen extends JFrame {
 						double fromPrice = Double.parseDouble(fromPriceTextField.getText());
 						double toPrice = Double.parseDouble(toPriceTextField.getText());
 						products = dataSource.findProductsByPriceRange(fromPrice, toPrice);
+					}
+					if (products != null && products.size() > 0) {
+						Object[][] data = new Object[products.size()][3];
+						for (int i = 0; i < products.size(); i++) {
+							data[i][0] = products.get(i).getId();
+							data[i][1] = products.get(i).getName();
+							data[i][2] = products.get(i).getUnitPrice();
 						}
-						displayProducts(products);
-						} catch (Exception ex) {
-						JOptionPane.showMessageDialog(FindDisplayScreen.this, "Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-						}
-						}
-						});
-		searchPanel.add(keywordTextField);
+						String[] columnNames = { "Product ID", "Product Name", "Price" };
+						TableModel tableModel = new DefaultTableModel(data, columnNames);
+						productTable.setModel(tableModel);
+					} else {
+						JOptionPane.showMessageDialog(FindDisplayScreen.this, "No products found", "Message",
+								JOptionPane.INFORMATION_MESSAGE);
+					}
+				} catch (Exception ex) {
+					JOptionPane.showMessageDialog(FindDisplayScreen.this,
+							"Error in searching product: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		});
 		searchPanel.add(fromPriceTextField);
 		searchPanel.add(toPriceTextField);
+		searchPanel.add(keywordTextField);
 		searchPanel.add(searchButton);
 
-		JPanel displayPanel = new JPanel();
-		displayPanel.setLayout(new BoxLayout(displayPanel, BoxLayout.X_AXIS));
+		productTable = new JTable();
+		JScrollPane scrollPane = new JScrollPane(productTable);
 
-		productTextArea = new JTextArea();
-		productTextArea.setEditable(false);
-
-		JScrollPane scrollPane = new JScrollPane(productTextArea);
-
-		displayPanel.add(scrollPane);
-
-		Container contentPane = this.getContentPane();
-		contentPane.add(radioButtonPanel, BorderLayout.NORTH);
-		contentPane.add(searchPanel, BorderLayout.CENTER);
-		contentPane.add(displayPanel, BorderLayout.SOUTH);
-	}
-
-	private void displayProducts(List<Product> products) {
-		productTextArea.setText("");
-		for (Product product : products) {
-			productTextArea.append(product.toString() + "\n");
-		}
+		this.getContentPane().setLayout(new BorderLayout());
+		this.getContentPane().add(radioButtonPanel, BorderLayout.WEST);
+		this.getContentPane().add(searchPanel, BorderLayout.NORTH);
+		this.getContentPane().add(scrollPane, BorderLayout.CENTER);
+		this.setVisible(true);
 	}
 }
