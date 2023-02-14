@@ -16,7 +16,7 @@ public class ProductDataSource {
 	public ArrayList<Product> getAllProducts() throws Exception {
 		return getAllProducts(new File(AppConstants.DATASOURCE_PATH));
 	}
-
+	
 	public ArrayList<Product> getAllProducts(File file) throws Exception {
 		ArrayList<Product> products = new ArrayList<Product>();
 		long totalBytes = file.length();
@@ -102,6 +102,14 @@ public class ProductDataSource {
 			e.printStackTrace();
 			throw new Exception("Some unexpected error occured while adding the product!!", e);
 		}
+	}
+	
+	public int getNumProducts() throws Exception {
+	    int position = 0;
+	    while (getProduct(position, false) != null) {
+	        position++;
+	    }
+	    return position;
 	}
 
 	public void updateProduct(Product newProduct) throws Exception {
