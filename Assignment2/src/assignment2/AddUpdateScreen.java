@@ -13,6 +13,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
@@ -170,10 +171,18 @@ public class AddUpdateScreen extends JFrame {
 		labelProductDesc.setVerticalAlignment(JLabel.TOP);
 		// setting the size for the text area
 		textAreaDesc = new JTextArea(5, 10);
+		//setting the size of the description not to changes according to text
+		textAreaDesc.setLineWrap(true);
+		textAreaDesc.setWrapStyleWord(true);
+		
+		//adding a JScrollPane, so if the text of the area exceeds, the user can naviagate
+		JScrollPane scrollPane = new JScrollPane(textAreaDesc);
+		scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		
 
 		// adding the label and text area to the panel
 		panelProductDesc.add(labelProductDesc, BorderLayout.WEST);
-		panelProductDesc.add(textAreaDesc, BorderLayout.CENTER);
+		panelProductDesc.add(scrollPane, BorderLayout.CENTER);
 	}
 
 	// method to layout of product price and quantity
