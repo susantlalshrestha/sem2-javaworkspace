@@ -25,7 +25,6 @@ import javax.swing.JTextField;
  * 
  * @author Leon Czarlinski
  */
-
 public class AddUpdateScreen extends JFrame {
 	private ProductDataSource dataSource;
 	// Create a panel to have label and text field for product ID

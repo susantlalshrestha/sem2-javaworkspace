@@ -252,17 +252,20 @@ public class ProductDataSource {
 			int totalBytes = in.available();
 			// Read through the file one product at a time, checking if the name contains
 			// the keyword.
-			for (int bytes = 0; bytes <= totalBytes; bytes += AppConstants.PRODUCT_TOTAL_BYTES) {
+			for (int bytes = 0; bytes < totalBytes; bytes += AppConstants.PRODUCT_TOTAL_BYTES) {
 				// Read the product ID and convert to a String.
 				String id = bytesToString(in.readNBytes(AppConstants.PRODUCT_ID_LENGTH));
 				// Read the product name and convert to a String.
 				String name = bytesToString(in.readNBytes(AppConstants.PRODUCT_NAME_MAX_LENGTH));
+				// Read the product description and convert to a String.
+				String description = bytesToString(in.readNBytes(AppConstants.PRODUCT_DESC_MAX_LENGTH));
+				// Read the quantity
+				int quantity = in.readInt();
+				// Read the price
+				double price = in.readDouble();
 				// If the name contains the keyword, read the rest of the product information
 				// and add to the ArrayList.
 				if (name.toLowerCase().contains(keyword.toLowerCase())) {
-					String description = bytesToString(in.readNBytes(AppConstants.PRODUCT_DESC_MAX_LENGTH));
-					int quantity = in.readInt();
-					double price = in.readDouble();
 					products.add(new Product(id, name, description, quantity, price));
 				}
 			}
@@ -271,6 +274,7 @@ public class ProductDataSource {
 			// Throws a FileNotFoundException if the specified data source file is not found
 			throw new FileNotFoundException("File not found in the path: " + AppConstants.DATASOURCE_PATH);
 		} catch (IOException e) {
+			e.printStackTrace();
 			// Throws an IOException if there is an error reading the data source file
 			throw new IOException("Couldn't read the product from the file. Make sure the input is correct!!", e);
 		} catch (Exception e) {
