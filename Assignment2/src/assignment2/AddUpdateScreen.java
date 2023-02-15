@@ -246,14 +246,14 @@ public class AddUpdateScreen extends JFrame {
 		// adding the ActionListener as a anonymous class
 		addBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ae) {
-				// create local variables to get the text from text field
-				String id = txtFieldProductID.getText().trim(); // product ID
-				String name = txtFieldProductName.getText().trim(); // product name
-				String description = textAreaDesc.getText().trim(); // product description
-				int quantity = Integer.parseInt(txtFieldQtdy.getText().trim()); // quantity
-				double price = Double.parseDouble(txtFieldPrice.getText().trim()); // unit price
 				// start try and catch to display correct messages to user
 				try {
+					// create local variables to get the text from text field
+					String id = txtFieldProductID.getText().trim(); // product ID
+					String name = txtFieldProductName.getText().trim(); // product name
+					String description = textAreaDesc.getText().trim(); // product description
+					int quantity = Integer.parseInt(txtFieldQtdy.getText().trim()); // quantity
+					double price = Double.parseDouble(txtFieldPrice.getText().trim()); // unit price
 					// create a object of the class
 					Product newProduct = new Product(id, name, description, quantity, price);
 					// call the method to add new product
@@ -277,7 +277,10 @@ public class AddUpdateScreen extends JFrame {
 						// set the reversed to false
 						reversed = false;
 					}
-				} catch (Exception e) {
+				} catch (NumberFormatException e) {
+					//throw an error in case user tries to add string in price or quantity text field.
+					JOptionPane.showMessageDialog(panelAddUpdate, "Quantity and price only accepts numbers", "Error", JOptionPane.ERROR_MESSAGE);
+				}catch (Exception e) {
 					// throw an error message in case something goes wrong.
 					JOptionPane.showMessageDialog(panelAddUpdate, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 				}
@@ -289,14 +292,14 @@ public class AddUpdateScreen extends JFrame {
 		// adding the ActionListener as a anonymous class
 		updateBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ae) {
-				// create local variables to get the text from text field
-				String id = txtFieldProductID.getText().trim(); // product ID
-				String name = txtFieldProductName.getText().trim(); // product name
-				String description = textAreaDesc.getText().trim(); // product description
-				int quantity = Integer.parseInt(txtFieldQtdy.getText().trim()); // quantity
-				double price = Double.parseDouble(txtFieldPrice.getText().trim()); // unit price
 				// start try and catch to display correct messages to user
 				try {
+					// create local variables to get the text from text field
+					String id = txtFieldProductID.getText().trim(); // product ID
+					String name = txtFieldProductName.getText().trim(); // product name
+					String description = textAreaDesc.getText().trim(); // product description
+					int quantity = Integer.parseInt(txtFieldQtdy.getText().trim()); // quantity
+					double price = Double.parseDouble(txtFieldPrice.getText().trim()); // unit price
 					// create a object of the class
 					Product newProduct = new Product(id, name, description, quantity, price);
 					// call the method to validate
@@ -308,6 +311,9 @@ public class AddUpdateScreen extends JFrame {
 					currentPosition = updatedPosition;
 					// set the reversed to false
 					reversed = false;
+				} catch (NumberFormatException e) {
+					//throw an error in case user tries to add string in price or quantity text field.
+					JOptionPane.showMessageDialog(panelAddUpdate, "Quantity and price only accepts numbers", "Error", JOptionPane.ERROR_MESSAGE);
 				} catch (Exception e) {
 					// throw an error message in case something goes wrong.
 					JOptionPane.showMessageDialog(panelAddUpdate, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
