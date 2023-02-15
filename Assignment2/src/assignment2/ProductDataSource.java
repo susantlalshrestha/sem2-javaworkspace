@@ -95,8 +95,10 @@ public class ProductDataSource {
 		long skipBytes = 0;
 		// Determine the number of bytes to skip based on the position and reverse flags
 		if (reverse) {
+			// 100 - (10 * (0 + 1))
 			skipBytes = totalBytes - (AppConstants.PRODUCT_TOTAL_BYTES * (position + 1));
 		} else {
+			// 10 * 0
 			skipBytes = (AppConstants.PRODUCT_TOTAL_BYTES * position);
 		}
 		// Check if the skip bytes are within the bounds of the file and return null if
@@ -203,8 +205,9 @@ public class ProductDataSource {
 		try (DataOutputStream out = new DataOutputStream(new FileOutputStream(file));) {
 			for (int i = 0; i < products.size(); i++) {
 				Product product = products.get(i);
-				// Writes the updated product details
+				// Finds the product in the file to be updated.
 				if (product.equals(newProduct)) {
+					// Writes the updated product details
 					out.write(stringToBytes(newProduct.getId(), AppConstants.PRODUCT_ID_LENGTH));
 					out.write(stringToBytes(newProduct.getName(), AppConstants.PRODUCT_NAME_MAX_LENGTH));
 					out.write(stringToBytes(newProduct.getDescription(), AppConstants.PRODUCT_DESC_MAX_LENGTH));

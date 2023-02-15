@@ -11,7 +11,7 @@ import java.util.List;
 
 //Create the FindDisplayScreen class which extends JFrame class
 public class FindDisplayScreen extends JFrame {
-	
+
 	// Initialize necessary instance variables
 	private ProductDataSource dataSource;
 	private JRadioButton allRadioButton;
@@ -22,14 +22,16 @@ public class FindDisplayScreen extends JFrame {
 	private JTextField toPriceTextField;
 	private JButton searchButton;
 	private JTable productTable;
-	
+
 	// Create a constructor for the FindDisplayScreen class
 	public FindDisplayScreen(ProductDataSource dataSource) {
-		// Set the ProductDataSource instance variable equal to the provided dataSource parameter
+		// Set the ProductDataSource instance variable equal to the provided dataSource
+		// parameter
 		this.dataSource = dataSource;
 		// Call the initUI method to initialize the user interface
 		this.initUI();
 	}
+
 	// Create the initUI method which initializes the user interface
 	private void initUI() {
 		// Set the title of the window
@@ -98,7 +100,12 @@ public class FindDisplayScreen extends JFrame {
 						JOptionPane.showMessageDialog(FindDisplayScreen.this, "No products found", "Message",
 								JOptionPane.INFORMATION_MESSAGE);
 					}
-					// Catch any exceptions that occurred during the product search and display an error message
+					// Catch any exceptions that occurred during the product search and display an
+					// error message
+				} catch (NumberFormatException ex) {
+					// throw an error in case user tries to add string in from or to text field.
+					JOptionPane.showMessageDialog(FindDisplayScreen.this, "From and to only accepts numbers", "Error",
+							JOptionPane.ERROR_MESSAGE);
 				} catch (Exception ex) {
 					JOptionPane.showMessageDialog(FindDisplayScreen.this,
 							"Error in searching product: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
@@ -127,6 +134,7 @@ public class FindDisplayScreen extends JFrame {
 		JPanel panel3 = new JPanel();
 		panel3.setLayout(new FlowLayout(FlowLayout.LEFT));
 		panel3.add(allRadioButton);
+
 		// Set the layout of the main content pane to a vertical BoxLayout
 		this.getContentPane().setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
 		this.getContentPane().add(panel1);
