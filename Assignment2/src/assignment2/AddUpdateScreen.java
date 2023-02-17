@@ -170,14 +170,14 @@ public class AddUpdateScreen extends JFrame {
 		labelProductDesc.setVerticalAlignment(JLabel.TOP);
 		// setting the size for the text area
 		textAreaDesc = new JTextArea(5, 10);
-		//setting the size of the description not to changes according to text
+		// setting the size of the description not to changes according to text
 		textAreaDesc.setLineWrap(true);
 		textAreaDesc.setWrapStyleWord(true);
-		
-		//adding a JScrollPane, so if the text of the area exceeds, the user can naviagate
+
+		// adding a JScrollPane, so if the text of the area exceeds, the user can
+		// naviagate
 		JScrollPane scrollPane = new JScrollPane(textAreaDesc);
 		scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-		
 
 		// adding the label and text area to the panel
 		panelProductDesc.add(labelProductDesc, BorderLayout.WEST);
@@ -246,16 +246,20 @@ public class AddUpdateScreen extends JFrame {
 		// adding the ActionListener as a anonymous class
 		addBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ae) {
-				// create local variables to get the text from text field
-				String id = txtFieldProductID.getText().trim(); // product ID
-				String name = txtFieldProductName.getText().trim(); // product name
-				String description = textAreaDesc.getText().trim(); // product description
-				int quantity = Integer.parseInt(txtFieldQtdy.getText().trim()); // quantity
-				double price = Double.parseDouble(txtFieldPrice.getText().trim()); // unit price
 				// start try and catch to display correct messages to user
 				try {
+					// create local variables to get the text from text field
+					String id = txtFieldProductID.getText().trim(); // product ID
+					String name = txtFieldProductName.getText().trim(); // product name
+					String description = textAreaDesc.getText().trim(); // product description
+					String quantityStr = txtFieldQtdy.getText().trim(); // quantity
+					String priceStr = txtFieldPrice.getText().trim(); // unit price
+					if (id.isBlank() || name.isBlank() || quantityStr.isBlank() || priceStr.isBlank()) {
+						throw new Exception("Please fill all the fields!");
+					}
 					// create a object of the class
-					Product newProduct = new Product(id, name, description, quantity, price);
+					Product newProduct = new Product(id, name, description, Integer.parseInt(quantityStr),
+							Double.parseDouble(priceStr));
 					// call the method to add new product
 					int addedPosition = dataSource.addProduct(newProduct);
 					// display a message of success
@@ -277,6 +281,11 @@ public class AddUpdateScreen extends JFrame {
 						// set the reversed to false
 						reversed = false;
 					}
+				} catch (NumberFormatException e) {
+					// throw an error in case user tries to add string in price or quantity text
+					// field.
+					JOptionPane.showMessageDialog(panelAddUpdate, "Quantity and price only accepts numbers", "Error",
+							JOptionPane.ERROR_MESSAGE);
 				} catch (Exception e) {
 					// throw an error message in case something goes wrong.
 					JOptionPane.showMessageDialog(panelAddUpdate, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
@@ -289,16 +298,20 @@ public class AddUpdateScreen extends JFrame {
 		// adding the ActionListener as a anonymous class
 		updateBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ae) {
-				// create local variables to get the text from text field
-				String id = txtFieldProductID.getText().trim(); // product ID
-				String name = txtFieldProductName.getText().trim(); // product name
-				String description = textAreaDesc.getText().trim(); // product description
-				int quantity = Integer.parseInt(txtFieldQtdy.getText().trim()); // quantity
-				double price = Double.parseDouble(txtFieldPrice.getText().trim()); // unit price
 				// start try and catch to display correct messages to user
 				try {
+					// create local variables to get the text from text field
+					String id = txtFieldProductID.getText().trim(); // product ID
+					String name = txtFieldProductName.getText().trim(); // product name
+					String description = textAreaDesc.getText().trim(); // product description
+					String quantityStr = txtFieldQtdy.getText().trim(); // quantity
+					String priceStr = txtFieldPrice.getText().trim(); // unit price
+					if (id.isBlank() || name.isBlank() || quantityStr.isBlank() || priceStr.isBlank()) {
+						throw new Exception("Please fill all the fields!");
+					}
 					// create a object of the class
-					Product newProduct = new Product(id, name, description, quantity, price);
+					Product newProduct = new Product(id, name, description, Integer.parseInt(quantityStr),
+							Double.parseDouble(priceStr));
 					// call the method to validate
 					int updatedPosition = dataSource.updateProduct(newProduct);
 					// display a message of success
@@ -308,6 +321,11 @@ public class AddUpdateScreen extends JFrame {
 					currentPosition = updatedPosition;
 					// set the reversed to false
 					reversed = false;
+				} catch (NumberFormatException e) {
+					// throw an error in case user tries to add string in price or quantity text
+					// field.
+					JOptionPane.showMessageDialog(panelAddUpdate, "Quantity and price only accepts numbers", "Error",
+							JOptionPane.ERROR_MESSAGE);
 				} catch (Exception e) {
 					// throw an error message in case something goes wrong.
 					JOptionPane.showMessageDialog(panelAddUpdate, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);

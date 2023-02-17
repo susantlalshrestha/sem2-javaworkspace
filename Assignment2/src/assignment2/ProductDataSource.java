@@ -94,10 +94,12 @@ public class ProductDataSource {
 		// Initialize the number of bytes to skip in the file to 0
 		long skipBytes = 0;
 		// Determine the number of bytes to skip based on the position and reverse flags
-		if (reverse) {
-			skipBytes = totalBytes - (AppConstants.PRODUCT_TOTAL_BYTES * (position + 1));
-		} else {
+		if (!reverse) {
+			// 10 * 0 = 0
 			skipBytes = (AppConstants.PRODUCT_TOTAL_BYTES * position);
+		} else {
+			// 100 - (10 * (0 + 1)) = 90
+			skipBytes = totalBytes - (AppConstants.PRODUCT_TOTAL_BYTES * (position + 1));
 		}
 		// Check if the skip bytes are within the bounds of the file and return null if
 		// not
@@ -203,8 +205,9 @@ public class ProductDataSource {
 		try (DataOutputStream out = new DataOutputStream(new FileOutputStream(file));) {
 			for (int i = 0; i < products.size(); i++) {
 				Product product = products.get(i);
-				// Writes the updated product details
+				// Finds the product in the file to be updated.
 				if (product.equals(newProduct)) {
+					// Writes the updated product details
 					out.write(stringToBytes(newProduct.getId(), AppConstants.PRODUCT_ID_LENGTH));
 					out.write(stringToBytes(newProduct.getName(), AppConstants.PRODUCT_NAME_MAX_LENGTH));
 					out.write(stringToBytes(newProduct.getDescription(), AppConstants.PRODUCT_DESC_MAX_LENGTH));
@@ -345,6 +348,9 @@ public class ProductDataSource {
 		}
 		if (product.getName().length() > AppConstants.PRODUCT_NAME_MAX_LENGTH) {
 			throw new Exception("Product id length must be at most " + AppConstants.PRODUCT_NAME_MAX_LENGTH);
+		}
+		if (product.getDescription().length() > AppConstants.PRODUCT_DESC_MAX_LENGTH) {
+			throw new Exception("Product description length must be at most " + AppConstants.PRODUCT_DESC_MAX_LENGTH);
 		}
 		if (product.getQuantity() <= 0) {
 			throw new Exception("Product quantity must be above 0!!");
