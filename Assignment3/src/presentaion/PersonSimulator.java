@@ -273,11 +273,11 @@ public class PersonSimulator extends JFrame {
 				io.write(new Person(id, firstName, lastName, phone, age));
 				// Show a success message.
 				this.showSuccessMessage("Person added Successfully!!");
+				// Clear the input fields.
+				this.clear();
 			}
 			// Close the file.
 			io.close();
-			// Clear the input fields.
-			this.clear();
 		} catch (NumberFormatException e) {
 			// Show a error message and focus on the age input field
 			this.showErrorMessage("Age can contain only numbers");
@@ -330,9 +330,9 @@ public class PersonSimulator extends JFrame {
 				// If the person is not found, clear the GUI fields, show an error message, and
 				// focus on the ID input field.
 				this.clear();
-				this.showErrorMessage("Person with record ID " + id + " not found!!");
 				this.txtRecordID.setText(id);
 				this.txtRecordID.requestFocus();
+				this.showErrorMessage("Person with record ID " + id + " not found!!");
 			}
 			// Close the file.
 			io.close();
