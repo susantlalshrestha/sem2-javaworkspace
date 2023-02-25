@@ -263,12 +263,19 @@ public class PersonSimulator extends JFrame {
 			RandomIO io = new RandomIO();
 			// Open the file with the given file path.
 			io.open(this.filePath);
-			// Write the new person to the file.
-			io.write(new Person(id, firstName, lastName, phone, age));
+			// check if a Person record with the same ID already exists in the file
+			if (io.findIndexOf(id) == -1) {
+				// Show an error message and focus on the ID input field.
+				this.showErrorMessage("Person record with same ID already exist!!");
+				this.txtRecordID.requestFocus();
+			} else {
+				// Write the new person to the file.
+				io.write(new Person(id, firstName, lastName, phone, age));
+				// Show a success message.
+				this.showSuccessMessage("Person added Successfully!!");
+			}
 			// Close the file.
 			io.close();
-			// Show a success message.
-			this.showSuccessMessage("Person added Successfully!!");
 			// Clear the input fields.
 			this.clear();
 		} catch (NumberFormatException e) {
