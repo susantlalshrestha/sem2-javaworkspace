@@ -5,11 +5,16 @@ import java.awt.Color;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import controller.StaffController;
+
 public class StaffInfoView extends JFrame {
+	private StaffController controller;
+
 	/**
 	 * Private constructor to create an instance of the StaffInfoView class
 	 */
-	private StaffInfoView() {
+	private StaffInfoView(StaffController controller) {
+		this.controller = controller;
 		// call the initUI() method to create the user interface.
 		this.initUI();
 	}
@@ -54,7 +59,7 @@ public class StaffInfoView extends JFrame {
 	 */
 	public static void open() {
 		// Create a new instance of the StaffInfoView.
-		StaffInfoView view = new StaffInfoView();
+		StaffInfoView view = new StaffInfoView(new StaffController());
 		// make frame visible
 		view.setVisible(true);
 	}

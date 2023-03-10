@@ -15,7 +15,6 @@ public class Staff {
 
 	public Staff(String id, String lastName, String firstName, char mi, String address, String city, String state,
 			String telephone, String email) {
-		super();
 		this.id = id;
 		this.lastName = lastName;
 		this.firstName = firstName;
