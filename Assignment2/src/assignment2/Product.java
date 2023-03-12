@@ -4,7 +4,7 @@ package assignment2;
  * 
  * This class represents a product with its various attributes.
  * 
- * @author Susant Shrestha
+ * @author susantshrestha
  */
 public class Product {
 
